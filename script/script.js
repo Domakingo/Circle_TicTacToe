@@ -5,9 +5,12 @@ let currentPlayer = 0;
 document.addEventListener("DOMContentLoaded", () => {
     initializeGameBoard();
 
+    playerIcon("P1");
+    playerIcon("P2");
+
     const centerX = 250;
     const centerY = 250;
-    const radiusStep = 40;
+    const radiusStep = 55;
     const sections = 8;
 
     for (let ring = 1; ring <= 4; ring++) {
@@ -19,11 +22,19 @@ document.addEventListener("DOMContentLoaded", () => {
             const path = createSector(centerX, centerY, innerRadius, outerRadius, sections, section);
             board[ring - 1][section] = path;
 
+            path.id = `${ring}-${section}`;
             path.addEventListener("click", () => handleSectorClick(ring - 1, section));
             svg.appendChild(path);
         }
     }
 });
+
+function playerIcon(player) {
+    const randomNumber = Math.floor(Math.random() * 1002);
+    const fileName = `assets/img/playerPics/${randomNumber}.png`;
+    
+    document.getElementById(`playerPic${player}`).style.backgroundImage = `url('${fileName}')`;
+}
 
 // Initialize game board
 function initializeGameBoard() {
